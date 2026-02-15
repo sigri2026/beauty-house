@@ -16,7 +16,7 @@ export default function Home() {
       <footer className="bg-black border-t border-white/10 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-gray-400">
-            © 2024 БьютиХаус. Все права защищены.
+            © 2026 БьютиХаус. Все права защищены.
           </p>
         </div>
       </footer>
