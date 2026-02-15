@@ -6,26 +6,26 @@ const masters = [
   {
     name: 'Анна Петрова',
     position: 'Стилист-колорист',
-    experience: '12 лет опыта',
-    image: 'https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=400',
+    experience: '5 лет опыта',
+    image: '/images/master1.jpg',
   },
   {
     name: 'Мария Соколова',
     position: 'Мастер маникюра',
     experience: '8 лет опыта',
-    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
+    image: '/images/master6.jpg',
   },
   {
     name: 'Елена Воронова',
     position: 'Визажист',
-    experience: '10 лет опыта',
-    image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400',
+    experience: '7 лет опыта',
+    image: '/images/master2.jpg',
   },
   {
     name: 'Ольга Смирнова',
     position: 'Brow-мастер',
-    experience: '7 лет опыта',
-    image: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400',
+    experience: '10 лет опыта',
+    image: '/images/master3.jpg',
   },
 ];
 
