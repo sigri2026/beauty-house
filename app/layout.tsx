@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'БьютиХаус - Премиум салон красоты в центре Москвы',
+  title: 'БьютиХаус - Премиум салон красоты в центре Санкт-Петербурга',
   description: 'Искусство быть красивой. Профессиональные услуги стилистов, визажистов и мастеров маникюра.',
   openGraph: {
     images: [
