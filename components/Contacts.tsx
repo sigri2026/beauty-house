@@ -116,7 +116,7 @@ export default function Contacts() {
                   <div>
                     <p className="text-gray-400 mb-1">Адрес</p>
                     <p className="text-white font-semibold">
-                      Москва, ул. Тверская, д. 15
+                      Санкт-Петербург, ул. Достоевского, д. 15
                     </p>
                   </div>
                 </div>
