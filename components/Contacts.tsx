@@ -128,7 +128,7 @@ export default function Contacts() {
                   <div>
                     <p className="text-gray-400 mb-1">Телефон</p>
                     <p className="text-white font-semibold">
-                      +7 (495) 123-45-67
+                      +7 (931) 327-49-39
                     </p>
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export default function Contacts() {
                   <div>
                     <p className="text-gray-400 mb-1">Email</p>
                     <p className="text-white font-semibold">
-                      info@beautyhouse.ru
+                      hello@beauty-house-spb.ru
                     </p>
                   </div>
                 </div>
@@ -152,7 +152,7 @@ export default function Contacts() {
                   <div>
                     <p className="text-gray-400 mb-1">Режим работы</p>
                     <p className="text-white font-semibold">
-                      Ежедневно: 09:00 - 21:00
+                      Ежедневно: 09:00 - 22:00
                     </p>
                   </div>
                 </div>
