@@ -31,7 +31,7 @@ export default function Hero() {
           </span>
         </h1>
         <p className="text-xl sm:text-2xl text-gray-200 mb-8 animate-fade-in-delay">
-          Премиум-салон красоты в центре Москвы
+          Премиум-салон красоты в центре Санкт-Петербурга
         </p>
         <Button
           onClick={() => scrollToSection('contacts')}
