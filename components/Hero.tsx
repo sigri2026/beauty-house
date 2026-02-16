@@ -5,9 +5,9 @@ import { ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function Hero() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [transitionState, setTransitionState] = useState('idle'); // 'idle', 'transitioning'
   
   // Массив с фоновыми изображениями
   const backgrounds = [
@@ -27,20 +27,21 @@ export default function Hero() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Начинаем переход
-      setIsTransitioning(true);
-      
-      // Через 1 секунду (длительность анимации) меняем индексы
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % backgrounds.length);
-        setNextIndex((prev) => (prev + 1) % backgrounds.length);
-        setIsTransitioning(false);
-      }, 1000);
-      
-    }, 5000); // Меняем каждые 5 секунд
+      if (transitionState === 'idle') {
+        // Начинаем переход
+        setTransitionState('transitioning');
+        
+        // Через 1 сек заканчиваем переход и обновляем индексы
+        setTimeout(() => {
+          setActiveIndex(nextIndex);
+          setNextIndex((nextIndex + 1) % backgrounds.length);
+          setTransitionState('idle');
+        }, 2000);
+      }
+    }, 7000);
     
     return () => clearInterval(interval);
-  }, [backgrounds.length]);
+  }, [transitionState, nextIndex, backgrounds.length]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -51,50 +52,26 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Текущее изображение */}
+      {/* Активное изображение (исчезает при переходе) */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
         style={{
-          backgroundImage: `url(${backgrounds[currentIndex]})`,
-          opacity: isTransitioning ? 0 : 1,
-          zIndex: 1,
+          backgroundImage: `url(${backgrounds[activeIndex]})`,
+          opacity: transitionState === 'transitioning' ? 0 : 1,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
       </div>
 
-      {/* Следующее изображение (появляется во время перехода) */}
+      {/* Следующее изображение (появляется при переходе) */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
         style={{
           backgroundImage: `url(${backgrounds[nextIndex]})`,
-          opacity: isTransitioning ? 1 : 0,
-          zIndex: 2,
+          opacity: transitionState === 'transitioning' ? 1 : 0,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
-      </div>
-
-      {/* Индикаторы (необязательно) */}
-      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2">
-        {backgrounds.map((_, index) => (
-          <button
-            key={index}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === currentIndex ? 'w-8 bg-[#D4AF37]' : 'bg-white/50'
-            }`}
-            onClick={() => {
-              // Ручное переключение (можно добавить при желании)
-              setNextIndex(index);
-              setIsTransitioning(true);
-              setTimeout(() => {
-                setCurrentIndex(index);
-                setNextIndex((index + 1) % backgrounds.length);
-                setIsTransitioning(false);
-              }, 1000);
-            }}
-          />
-        ))}
       </div>
 
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
