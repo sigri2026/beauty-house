@@ -16,3 +16,6 @@ beauty-house
 
 ## Ссылки
 - Сайт: [https://beauty-house-spb.vercel.app](https://beauty-house-spb.vercel.app)
+
+## Промты
+- Сайт: [https://github.com/sigri2026/prompts](https://github.com/sigri2026/prompts)
