@@ -43,6 +43,14 @@ const services = [
 ];
 
 export default function Services() {
+  
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-black relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-neutral-950 to-black" />
@@ -87,10 +95,11 @@ export default function Services() {
                     {service.price}
                   </span>
                   <Button
+                    onClick={() => scrollToSection('contacts')}
                     variant="ghost"
                     className="text-white hover:text-[#D4AF37] hover:bg-white/10"
                   >
-                    Подробнее
+                    Записаться
                   </Button>
                 </div>
               </div>

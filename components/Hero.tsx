@@ -5,10 +5,8 @@ import { ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function Hero() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(1);
-  const [transitionState, setTransitionState] = useState('idle'); // 'idle', 'transitioning'
-  
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   // Массив с фоновыми изображениями
   const backgrounds = [
     '/images/inside1.jpg',
@@ -27,21 +25,11 @@ export default function Hero() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (transitionState === 'idle') {
-        // Начинаем переход
-        setTransitionState('transitioning');
-        
-        // Через 1 сек заканчиваем переход и обновляем индексы
-        setTimeout(() => {
-          setActiveIndex(nextIndex);
-          setNextIndex((nextIndex + 1) % backgrounds.length);
-          setTransitionState('idle');
-        }, 2000);
-      }
-    }, 7000);
+      setCurrentIndex((prev) => (prev + 1) % backgrounds.length);
+    }, 5000);
     
     return () => clearInterval(interval);
-  }, [transitionState, nextIndex, backgrounds.length]);
+  }, [backgrounds.length]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -52,27 +40,27 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Активное изображение (исчезает при переходе) */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
-        style={{
-          backgroundImage: `url(${backgrounds[activeIndex]})`,
-          opacity: transitionState === 'transitioning' ? 0 : 1,
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+      {/* Контейнер для фонов */}
+      <div className="absolute inset-0 grid grid-cols-1">
+        {backgrounds.map((src, index) => (
+          <div
+            key={src}
+            className="row-span-1 col-span-1 transition-opacity duration-1000 ease-in-out"
+            style={{
+              backgroundImage: `url(${src})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              opacity: index === currentIndex ? 1 : 0,
+              gridRow: 1,
+              gridColumn: 1,
+              willChange: 'opacity',
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+          </div>
+        ))}
       </div>
 
-      {/* Следующее изображение (появляется при переходе) */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
-        style={{
-          backgroundImage: `url(${backgrounds[nextIndex]})`,
-          opacity: transitionState === 'transitioning' ? 1 : 0,
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
-      </div>
 
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 animate-fade-in">
