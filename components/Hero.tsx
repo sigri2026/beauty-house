@@ -2,8 +2,46 @@
 
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export default function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  // Массив с фоновыми изображениями
+  const backgrounds = [
+    '/images/inside1.jpg',
+    '/images/inside2.jpg',
+    '/images/inside3.jpg',
+    '/images/inside4.jpg',
+  ];
+
+  // Предзагрузка изображений
+  useEffect(() => {
+    backgrounds.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Начинаем переход
+      setIsTransitioning(true);
+      
+      // Через 1 секунду (длительность анимации) меняем индексы
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % backgrounds.length);
+        setNextIndex((prev) => (prev + 1) % backgrounds.length);
+        setIsTransitioning(false);
+      }, 1000);
+      
+    }, 5000); // Меняем каждые 5 секунд
+    
+    return () => clearInterval(interval);
+  }, [backgrounds.length]);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -13,14 +51,50 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Текущее изображение */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
         style={{
-          backgroundImage:
-            'url(https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=1920)',
+          backgroundImage: `url(${backgrounds[currentIndex]})`,
+          opacity: isTransitioning ? 0 : 1,
+          zIndex: 1,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+      </div>
+
+      {/* Следующее изображение (появляется во время перехода) */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out"
+        style={{
+          backgroundImage: `url(${backgrounds[nextIndex]})`,
+          opacity: isTransitioning ? 1 : 0,
+          zIndex: 2,
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+      </div>
+
+      {/* Индикаторы (необязательно) */}
+      <div className="absolute bottom-20 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {backgrounds.map((_, index) => (
+          <button
+            key={index}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex ? 'w-8 bg-[#D4AF37]' : 'bg-white/50'
+            }`}
+            onClick={() => {
+              // Ручное переключение (можно добавить при желании)
+              setNextIndex(index);
+              setIsTransitioning(true);
+              setTimeout(() => {
+                setCurrentIndex(index);
+                setNextIndex((index + 1) % backgrounds.length);
+                setIsTransitioning(false);
+              }, 1000);
+            }}
+          />
+        ))}
       </div>
 
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
