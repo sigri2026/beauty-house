@@ -81,7 +81,7 @@ export default function Contacts() {
                     <SelectTrigger className="bg-white/5 border-white/20 text-white focus:border-[#D4AF37]">
                       <SelectValue placeholder="Выберите услугу" />
                     </SelectTrigger>
-                    <SelectContent className="bg-neutral-900 border-white/20">
+                    <SelectContent className="bg-neutral-900 border-white/20 text-white">
                       <SelectItem value="haircut">Стрижки и укладки</SelectItem>
                       <SelectItem value="coloring">Окрашивание</SelectItem>
                       <SelectItem value="makeup">Макияж</SelectItem>
